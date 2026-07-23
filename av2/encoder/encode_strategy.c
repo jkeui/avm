@@ -503,7 +503,10 @@ static struct lookahead_entry *choose_frame_source(
       // When S-frames prevent show_existing_frame for overlays, the hidden
       // altref must not be implicitly output to avoid duplicate frames.
       if (cm->implicit_output_picture &&
-          (cm->current_frame.frame_type == S_FRAME ||
+          (
+#if 0
+           cm->current_frame.frame_type == S_FRAME ||
+#endif
            cpi->oxcf.tool_cfg.g_error_resilient_mode)) {
         cm->implicit_output_picture = 0;
       }
@@ -1022,7 +1025,10 @@ static int denoise_and_encode(AV2_COMP *const cpi, uint8_t *const dest,
     // must not be implicitly output, otherwise the decoder outputs both
     // the evicted altref and the overlay, causing duplicate frames.
     if (cm->implicit_output_picture &&
-        (cpi->oxcf.kf_cfg.enable_sframe ||
+        (
+#if 0
+         cm->current_frame.frame_type == S_FRAME ||
+#endif
          cpi->oxcf.tool_cfg.g_error_resilient_mode)) {
       cm->implicit_output_picture = 0;
     }
